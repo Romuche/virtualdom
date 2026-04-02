@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual List — Pretext</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f2f2f7;
+    }
+
+    #chat-scroll {
+      height: 100%;
+      overflow-y: scroll;
+    }
+
+    /* Tall inner container; items are absolutely positioned inside */
+    #chat-inner {
+      position: relative;
+    }
+
+    /* ── Message rows ───────────────────────────────────────────────────── */
+
+    .msg-row {
+      display: flex;
+      align-items: flex-end;
+      padding: 0 12px;
+    }
+
+    .msg-row.msg-me    { justify-content: flex-end; }
+    .msg-row.msg-other { gap: 8px; }
+
+    /* ── Avatar ─────────────────────────────────────────────────────────── */
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #c7c7cc;
+      flex-shrink: 0;
+    }
+
+    /* ── Bubbles ─────────────────────────────────────────────────────────── */
+
+    .bubble {
+      max-width: 70%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      word-break: break-word;
+    }
+
+    .msg-me .bubble {
+      background: #0b93f6;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg-other .bubble {
+      background: #e5e5ea;
+      color: #1c1c1e;
+      border-bottom-left-radius: 4px;
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/virtual-DNOgNgT2.js"></script>
+</head>
+<body>
+  <div id="chat-scroll">
+    <div id="chat-inner"></div>
+  </div>
+</body>
+</html>

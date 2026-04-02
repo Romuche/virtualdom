@@ -1,0 +1,17 @@
+{
+  "name": "virtualdom-demo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build"
+  },
+  "dependencies": {
+    "@chenglou/pretext": "latest"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

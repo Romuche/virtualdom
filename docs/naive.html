@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naive — 1000 DOM nodes</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f2f2f7;
+    }
+
+    #chat-scroll {
+      height: 100%;
+      overflow-y: scroll;
+    }
+
+    #chat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px;
+    }
+
+    /* ── Message rows ───────────────────────────────────────────────────── */
+
+    .msg-row {
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .msg-row.msg-me    { justify-content: flex-end; }
+    .msg-row.msg-other { gap: 8px; }
+
+    /* Extra gap above a message when the sender changes */
+    .msg-row.first-in-run { margin-top: 8px; }
+
+    /* ── Avatar ─────────────────────────────────────────────────────────── */
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #c7c7cc;
+      flex-shrink: 0;
+    }
+
+    /* ── Bubbles ─────────────────────────────────────────────────────────── */
+
+    .bubble {
+      max-width: 70%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      word-break: break-word;
+    }
+
+    .msg-me .bubble {
+      background: #0b93f6;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg-other .bubble {
+      background: #e5e5ea;
+      color: #1c1c1e;
+      border-bottom-left-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-scroll">
+    <div id="chat-list"></div>
+  </div>
+
+  <script type="module">
+    import { messages as TEMPLATES } from './messages.js'
+
+    const TOTAL    = 1000
+    const chatList = document.getElementById('chat-list')
+
+    // Expand 32-template cycle into 1000 messages
+    const allMessages = Array.from({ length: TOTAL }, (_, i) => TEMPLATES[i % TEMPLATES.length])
+
+    // Render all 1000 into the DOM at once — intentionally naive
+    const fragment = document.createDocumentFragment()
+
+    allMessages.forEach((msg, i) => {
+      const row = document.createElement('div')
+      row.className = `msg-row msg-${msg.sender}`
+
+      const prevMsg = i > 0 ? allMessages[i - 1] : null
+      if (prevMsg && msg.sender !== prevMsg.sender) {
+        row.classList.add('first-in-run')
+      }
+
+      if (msg.sender === 'other') {
+        const av = document.createElement('div')
+        av.className = 'avatar'
+        row.appendChild(av)
+      }
+
+      const bubble = document.createElement('div')
+      bubble.className = 'bubble'
+      bubble.textContent = msg.text
+      row.appendChild(bubble)
+
+      fragment.appendChild(row)
+    })
+
+    chatList.appendChild(fragment)
+
+    // Start scrolled to the bottom, like a real chat app
+    const chatScroll = document.getElementById('chat-scroll')
+    chatScroll.scrollTop = chatScroll.scrollHeight
+  </script>
+</body>
+</html>

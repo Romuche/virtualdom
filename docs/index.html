@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretext vs Naive — Scroll Performance Demo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #000;
+    }
+
+    /* ── Header ──────────────────────────────────────────────────────────── */
+
+    #header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 40px;
+      background: #1c1c1e;
+      color: #fff;
+      display: flex;
+      align-items: stretch;
+      z-index: 10;
+    }
+
+    #title {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      border-right: 1px solid #38383a;
+      flex-shrink: 0;
+    }
+
+    #col-labels {
+      flex: 1;
+      display: flex;
+    }
+
+    .col-label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 0.01em;
+    }
+
+    .col-label:first-child {
+      border-right: 1px solid #38383a;
+    }
+
+    /* ── Iframe container ────────────────────────────────────────────────── */
+
+    #iframes {
+      position: fixed;
+      top: 40px; left: 0; right: 0; bottom: 0;
+      display: flex;
+    }
+
+    iframe {
+      flex: 1;
+      border: none;
+      height: 100%;
+    }
+
+    iframe + iframe {
+      border-left: 1px solid #38383a;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <div id="title">Pretext vs Naive — Scroll Performance Demo</div>
+    <div id="col-labels">
+      <div class="col-label">Naive (1000 DOM nodes)</div>
+      <div class="col-label">Virtual list (Pretext)</div>
+    </div>
+  </div>
+
+  <div id="iframes">
+    <iframe src="naive.html"   title="Naive rendering — 1000 DOM nodes"></iframe>
+    <iframe src="virtual.html" title="Virtual list with Pretext"></iframe>
+  </div>
+</body>
+</html>
