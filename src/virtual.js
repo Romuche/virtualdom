@@ -3,7 +3,7 @@ import { messages as TEMPLATES } from './messages.js'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const TOTAL        = 1000
+const TOTAL        = 10000
 const FONT         = '16px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
 const LINE_HEIGHT  = 24   // 16px × 1.5
 const BUBBLE_PAD_V = 24   // 12px top + 12px bottom
