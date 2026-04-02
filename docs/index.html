@@ -9,85 +9,115 @@
 
     html, body {
       height: 100%;
-      overflow: hidden;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #000;
+      background: #f2f2f7;
+      color: #1c1c1e;
     }
 
-    /* ── Header ──────────────────────────────────────────────────────────── */
-
-    #header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 40px;
-      background: #1c1c1e;
-      color: #fff;
+    main {
+      min-height: 100%;
       display: flex;
-      align-items: stretch;
-      z-index: 10;
-    }
-
-    #title {
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      font-size: 13px;
-      font-weight: 600;
-      white-space: nowrap;
-      border-right: 1px solid #38383a;
-      flex-shrink: 0;
-    }
-
-    #col-labels {
-      flex: 1;
-      display: flex;
-    }
-
-    .col-label {
-      flex: 1;
-      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.55);
-      letter-spacing: 0.01em;
+      padding: 48px 24px;
+      gap: 40px;
     }
 
-    .col-label:first-child {
-      border-right: 1px solid #38383a;
-    }
-
-    /* ── Iframe container ────────────────────────────────────────────────── */
-
-    #iframes {
-      position: fixed;
-      top: 40px; left: 0; right: 0; bottom: 0;
+    .hero {
+      text-align: center;
       display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    iframe {
-      flex: 1;
-      border: none;
-      height: 100%;
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
-    iframe + iframe {
-      border-left: 1px solid #38383a;
+    .subtitle {
+      font-size: 15px;
+      color: #636366;
+      max-width: 420px;
+      line-height: 1.5;
+    }
+
+    .cards {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 220px;
+      padding: 24px 20px;
+      border-radius: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card.naive {
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    }
+
+    .card.virtual {
+      background: #0b93f6;
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(11,147,246,.2), 0 4px 20px rgba(11,147,246,.3);
+    }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.55;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      opacity: 0.7;
     }
   </style>
 </head>
 <body>
-  <div id="header">
-    <div id="title">Pretext vs Naive — Scroll Performance Demo</div>
-    <div id="col-labels">
-      <div class="col-label">Naive (10 000 DOM nodes)</div>
-      <div class="col-label">Virtual list (Pretext)</div>
+  <main>
+    <div class="hero">
+      <h1>Pretext vs Naive</h1>
+      <p class="subtitle">A scroll performance comparison — 10 000 chat messages, two rendering strategies. Open each page and try scrolling.</p>
     </div>
-  </div>
 
-  <div id="iframes">
-    <iframe src="naive.html"   title="Naive rendering — 1000 DOM nodes"></iframe>
-    <iframe src="virtual.html" title="Virtual list with Pretext"></iframe>
-  </div>
+    <div class="cards">
+      <a class="card naive" href="naive.html">
+        <span class="card-label">Baseline</span>
+        <span class="card-title">Naive rendering</span>
+        <span class="card-desc">All 10 000 DOM nodes inserted at once.</span>
+      </a>
+      <a class="card virtual" href="virtual.html">
+        <span class="card-label">Optimised</span>
+        <span class="card-title">Virtual list</span>
+        <span class="card-desc">Only ~30 nodes in the DOM at any time, heights pre-computed with Pretext.</span>
+      </a>
+    </div>
+  </main>
 </body>
 </html>
