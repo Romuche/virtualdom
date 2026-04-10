@@ -1,20 +1,22 @@
 # Pretext vs Naive — Scroll Performance Demo
 
-A side-by-side visual comparison of two chat-list rendering strategies, designed to let you **feel** the scroll performance difference in the browser.
+A visual comparison of two chat-list rendering strategies, designed to let you **feel** the scroll performance difference in the browser.
 
 ## What it tests
 
-| Left (Naive) | Right (Virtual / Pretext) |
+| Naive | Virtual (Pretext) |
 |---|---|
-| Renders all **1,000 chat messages** into the DOM at once | Only renders the **~20–30 messages** visible in the current viewport |
+| Renders all **10 000 chat messages** into the DOM at once | Only renders the **~30 messages** visible in the current viewport |
 | DOM node count grows linearly with message count | DOM node count stays constant regardless of history length |
-| Scrolling forces the browser to composite 1,000 nodes | Scrolling only composites the visible slice + 3-item overscan |
+| Scrolling forces the browser to composite 10 000 nodes | Scrolling only composites the visible slice + 3-item overscan |
 
 The virtual list uses **[@chenglou/pretext](https://github.com/chenglou/pretext)** to pre-compute every message's pixel height without touching the DOM. This lets it place items via absolute positioning and maintain an accurate scrollbar height — with no layout thrashing.
 
 ## Live demo
 
 **<https://romuche.github.io/virtualdom/>**
+
+The homepage links to two standalone pages — open each one and try scrolling to compare.
 
 ## Project structure
 
@@ -25,10 +27,10 @@ The virtual list uses **[@chenglou/pretext](https://github.com/chenglou/pretext)
 │   ├── messages.js     # Shared 32-template message dataset (ES module)
 │   └── virtual.js      # Virtual list implementation using Pretext
 ├── docs/               # GitHub Pages root
-│   ├── index.html      # Parent page — two iframes side by side
-│   ├── naive.html      # Naive renderer (static, no build step)
+│   ├── index.html      # Landing page with links to both demos
+│   ├── naive.html      # Naive renderer — 10 000 DOM nodes (static, no build step)
+│   ├── virtual.html    # Virtual list — built by Vite
 │   ├── messages.js     # Copied here by build for naive.html to import
-│   ├── virtual.html    # Built by Vite
 │   └── assets/         # Vite-generated JS bundle
 ├── vite.config.js
 └── package.json
@@ -41,9 +43,9 @@ npm install
 npm run dev        # dev server at http://localhost:5173
 ```
 
-Then open `http://localhost:5173/docs/index.html` in Chrome to see both iframes.
+Then open `http://localhost:5173/docs/index.html` in Chrome.
 
-> **Note:** The naive iframe imports `messages.js` as an ES module, which requires an HTTP server (not `file://`). The dev server satisfies this automatically.
+> **Note:** `naive.html` imports `messages.js` as an ES module, which requires an HTTP server (not `file://`). The dev server satisfies this automatically.
 
 ## Building
 
